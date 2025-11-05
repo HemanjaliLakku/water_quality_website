@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Quality Monitoring System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>💧 Water Quality Monitoring and Disease Detection</h1>
+
+    <div class="container">
+        <label for="phValue">Enter pH Value:</label><br>
+        <input type="number" id="phValue" step="0.1" placeholder="e.g., 7.2">
+        <button onclick="checkQuality()">Check Water Quality</button>
+
+        <p id="result"></p>
+        <p id="diseaseInfo"></p>
+    </div>
+
+    <footer>
+        <p>Developed by <b>Your Team Name</b> | CSE Project</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
