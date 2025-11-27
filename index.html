@@ -3,100 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Water Safety Checker</title>
-
+<title>Water Safety Checker 💧</title>
 <style>
     body {
         font-family: Arial, sans-serif;
         text-align: center;
-        background: linear-gradient(to right, #00B4DB, #0083B0);
-        padding: 40px;
+        background: linear-gradient(135deg, #00B4DB, #0083B0, #1E3C72);
+        min-height: 100vh;
+        padding: 40px 20px;
         color: white;
     }
     h1 {
         font-size: 32px;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
     }
     .box {
-        background-color: rgba(255, 255, 255, 0.2);
-        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.15);
+        padding: 25px;
         border-radius: 15px;
-        width: 80%;
+        width: 90%;
         max-width: 600px;
-        margin: auto;
+        margin: 30px auto;
         backdrop-filter: blur(6px);
-    }
-    .result {
-        font-size: 22px;
-        margin-top: 15px;
-        font-weight: bold;
     }
     input {
         padding: 10px;
         width: 60%;
         border-radius: 8px;
         border: none;
-        margin-bottom: 10px;
+        margin: 10px 0;
         font-size: 18px;
     }
     button {
-        padding: 10px 20px;
+        padding: 10px 25px;
         border-radius: 10px;
         border: none;
         font-size: 18px;
         cursor: pointer;
+        background-color: #1E3C72;
+        color: white;
+        margin-top: 10px;
+    }
+    .result {
+        font-size: 22px;
+        margin-top: 15px;
+        font-weight: bold;
     }
     .precautions {
         font-size: 18px;
-        margin-top: 15px;
+        margin-top: 10px;
     }
 </style>
-
 <script>
 function checkWaterSafety() {
     let ph = parseFloat(document.getElementById("ph").value);
+    let tds = parseFloat(document.getElementById("tds").value);
+    let turbidity = parseFloat(document.getElementById("turbidity").value);
+
     let englishResult = "";
     let teluguResult = "";
     let englishPrecautions = "";
     let teluguPrecautions = "";
+    let color = "";
 
-    if (ph >= 6.5 && ph <= 8.5) {
+    // Simple combined safety logic
+    if (ph >= 6.5 && ph <= 8.5 && tds <= 500 && turbidity <= 5) {
         englishResult = "Safe for Drinking ✔";
         teluguResult = "తాగడానికి సురక్షితం ✔";
-
-        englishPrecautions = "Precautions: Store water in a clean container and keep it covered.";
+        englishPrecautions = "Store water in a clean container and keep it covered.";
         teluguPrecautions = "జాగ్రత్తలు: నీటిని శుభ్రమైన పాత్రలో నిల్వ చేసి మూతపెట్టాలి.";
-    } 
-    else if ((ph >= 6 && ph < 6.5) || (ph > 8.5 && ph <= 9)) {
+        color = "green";
+    } else if ((ph >= 6 && ph < 6.5 || ph > 8.5 && ph <= 9) || (tds > 500 && tds <= 1000) || (turbidity > 5 && turbidity <= 10)) {
         englishResult = "Moderately Safe ⚠";
         teluguResult = "మధ్యస్థంగా సురక్షితం ⚠";
-
-        englishPrecautions = "Precautions: Boil the water before drinking or use a water filter.";
+        englishPrecautions = "Boil the water before drinking or use a water filter.";
         teluguPrecautions = "జాగ్రత్తలు: నీటిని తాగేముందు మరిగించాలి లేదా ఫిల్టర్ వాడాలి.";
-    } 
-    else {
+        color = "orange";
+    } else {
         englishResult = "Not Safe ✘";
         teluguResult = "సురక్షితం కాదు ✘";
-
-        englishPrecautions = "Precautions: Do not drink this water. Use purified or bottled water.";
+        englishPrecautions = "Do not drink this water. Use purified or bottled water.";
         teluguPrecautions = "జాగ్రత్తలు: ఈ నీటిని తాగవద్దు. శుద్ధి చేసిన నీరు లేదా బాటిల్ నీరు వాడండి.";
+        color = "red";
     }
 
     document.getElementById("result-en").innerText = englishResult;
     document.getElementById("result-te").innerText = teluguResult;
     document.getElementById("precautions-en").innerText = englishPrecautions;
     document.getElementById("precautions-te").innerText = teluguPrecautions;
+    document.getElementById("result-en").style.color = color;
+    document.getElementById("result-te").style.color = color;
 }
 </script>
-
 </head>
 <body>
 
 <h1>Water Safety Checker 💧</h1>
 
 <div class="box">
-    <input type="number" step="0.01" id="ph" placeholder="Enter pH value">
-    <br>
+    <input type="number" step="0.01" id="ph" placeholder="Enter pH value"><br>
+    <input type="number" id="tds" placeholder="Enter TDS (ppm)"><br>
+    <input type="number" id="turbidity" placeholder="Enter Turbidity (NTU)"><br>
     <button onclick="checkWaterSafety()">Check</button>
 
     <p class="result" id="result-en"></p>
